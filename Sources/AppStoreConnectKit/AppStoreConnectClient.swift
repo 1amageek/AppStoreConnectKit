@@ -45,7 +45,7 @@ public class AppStoreConnectClient {
 
     var currentToken: String?
 
-    init(configuration: Configuration) {
+    public init(configuration: Configuration) {
         self.configuration = configuration
     }
 
