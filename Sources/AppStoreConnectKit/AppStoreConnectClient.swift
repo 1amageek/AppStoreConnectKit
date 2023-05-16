@@ -77,7 +77,7 @@ public class AppStoreConnectClient {
 
 extension AppStoreConnectClient {
 
-    public func request<Response>(_ request: Request<Response>) async throws -> Response where Response: Decodable {
+    public func request<Response>(_ request: Request<Response>) async throws -> (Response, HTTPClient.Response) where Response: Decodable {
         guard let url = request.url else {
             throw NSError(domain: "Invalid URL", code: -1, userInfo: nil)
         }
@@ -117,6 +117,7 @@ extension AppStoreConnectClient {
             throw NSError(domain: "Client", code: -1, userInfo: [NSLocalizedDescriptionKey: "Invalid response from token endpoint"])
         }
         let decoder = JSONDecoder()
-        return try decoder.decode(Response.self, from: responseBodyData)
+        let decoded = try decoder.decode(Response.self, from: responseBodyData)
+        return (decoded, response)
     }
 }
